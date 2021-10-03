@@ -1,0 +1,31 @@
+<!--Örnek Tomcat web.xml dosyası. İlgili webapp'in WEBINF klasörü içine koyulmalı derlenin target çıktıları lib ve classes ile birlikte. -->
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!--
+    refs: https://developer.ibm.com/articles/wa-aj-tomcat/
+    -->
+    <servlet>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>api.rest</param-value>
+            <!-- Class adlarını vermiyoruz, package içinde kendi bulacak. Birden fazla package olabilir.-->
+        </init-param>
+        <!--1 ise class'ları daha çağrılmadan run eder.-->
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+        <!--Eğer direk root'tan başlarsam tomcat kökü glassfish tamamen ele geçirir başka bir şey host etme şansım kalmaz-->
+    </servlet-mapping>
+
+</web-app>
